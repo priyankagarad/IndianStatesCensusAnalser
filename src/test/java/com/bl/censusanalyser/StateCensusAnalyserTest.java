@@ -74,24 +74,25 @@ public class StateCensusAnalyserTest {
     @Test
     public void givenTotalRecordsFromStateCsvDataFile_whenMatch_shouldReturnTrue() throws StateCensusAnalyserException {
         try {
-            int totalRecords = stateCensusAnalyser.loadData();
+            int totalRecords = csvStates.loadStateCodes(STATE_CODE_FILE);
             Assert.assertEquals(37, totalRecords);
         } catch (Exception e) {
         }
     }
 
+    @Test
     public void givenStateCodeCSVFileNameType_whenImproper_shouldThrowException() throws IOException {
         try {
-            stateCensusAnalyser.loadData();
+            csvStates.loadStateCodes(WRONG_STATE_CODE_FILE);
         } catch (StateCensusAnalyserException e) {
             Assert.assertEquals(StateCensusAnalyserException.exceptionType.FILE_NOT_FOUND, e.exceptionTypeObject);
         }
     }
-    /* TC 2.4/2.05 test to check if StateCensus Data file is correct but Header and Delimiter is incorrect */
+
     @Test
     public void givenStateCodeCSVFileData_whenIncorrect_shouldThrowException() throws IOException{
         try {
-            stateCensusAnalyser.loadData();
+            csvStates.loadStateCodes(WRONG_STATE_CODE_FILE);
         } catch (StateCensusAnalyserException e) {
             Assert.assertEquals(StateCensusAnalyserException.exceptionType.INCORRECT_FILE, e.exceptionTypeObject);
         }
