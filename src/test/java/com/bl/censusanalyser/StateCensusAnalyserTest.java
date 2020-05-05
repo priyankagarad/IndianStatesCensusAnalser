@@ -26,6 +26,8 @@ public class StateCensusAnalyserTest
         {
             int totalRecords = stateCensusAnalyser.loadIndianData(DATA_CSV_FILE_PATH, CSVStateCensus.class);
             Assert.assertEquals(29, totalRecords);
+            int count = stateCensusAnalyser.loadIndianData(STATE_CODE_FILE, CSVStateCensus.class);
+            Assert.assertEquals(37, count);
         } catch (StateCensusAnalyserException e) {
         }
     }
