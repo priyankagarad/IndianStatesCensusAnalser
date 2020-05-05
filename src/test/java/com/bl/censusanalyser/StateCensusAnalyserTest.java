@@ -172,4 +172,16 @@ public class StateCensusAnalyserTest
             e.printStackTrace();
         }
     }
+    /* TC 6 : test to check census data is sorted in Json format according to Density */
+    @Test
+    public void givenStateCensusDensityWiseData_whenSortedOnStates_shouldReturnSortedResult() throws CSVBuilderException, IOException {
+        try {
+            stateCensusAnalyser.loadIndianData(DATA_CSV_FILE_PATH,CSVStateCensus.class);
+            String sortedStateCensusData = stateCensusAnalyser.getSortData(DATA_CSV_FILE_PATH);
+            CSVStateCensus[] csvStateCensus = new Gson().fromJson(sortedStateCensusData,CSVStateCensus[].class);
+            Assert.assertEquals(1102, csvStateCensus[0].getDensityPerSqKm());
+        } catch (StateCensusAnalyserException e) {
+            e.printStackTrace();
+        }
+    }
 }

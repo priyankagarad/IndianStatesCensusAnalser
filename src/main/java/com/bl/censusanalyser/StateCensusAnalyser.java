@@ -24,7 +24,7 @@ public class StateCensusAnalyser<T> {
                 Iterable<T> csvFileIterable =()-> csvStateCensusIterator;
                 while (csvStateCensusIterator.hasNext()) {
                     CSVStateCensusDAO value =new CSVStateCensusDAO((CSVStateCensus) csvStateCensusIterator.next());
-                    this.csvStateCodeMap.put(value.state, (T) value);
+                    this.csvStateCodeMap.put(value.getState(), (T) value);
                     csvFileList = csvStateCodeMap.values().stream().collect(Collectors.toList());
                 }
                 int totalRecords = csvStateCodeMap.size();
