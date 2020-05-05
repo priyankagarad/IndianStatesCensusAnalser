@@ -16,7 +16,8 @@ public class StateCensusAnalyser<T>
         int totalRecords = 0;
         try (Reader reader = newBufferedReader(Paths.get(csvFilePath));)
         {
-            Iterator<T> csvStateCensusIterator = (Iterator<T>) new CSVBuilder().getFileIterator(reader,T.getClass());
+            ICSVBuilder icsvBuilder=CSVBuilderFactory.icsBuilder();
+            Iterator<T> csvStateCensusIterator = (Iterator<T>) icsvBuilder.getFileIterator(reader,T.getClass());
             while (csvStateCensusIterator.hasNext())
             {
                 csvStateCensusIterator.next();
