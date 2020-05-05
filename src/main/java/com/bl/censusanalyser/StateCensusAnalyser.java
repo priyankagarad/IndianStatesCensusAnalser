@@ -45,7 +45,7 @@ public class StateCensusAnalyser<T>
     }
 
 
-    public String getSortedStateCensusData(Object T) throws StateCensusAnalyserException
+    public String getSortData(Object T) throws StateCensusAnalyserException
     {
         if (csvFileList.size() == 0 | csvFileList == null)
         {
