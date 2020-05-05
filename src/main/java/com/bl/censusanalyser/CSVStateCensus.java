@@ -1,6 +1,7 @@
 package com.bl.censusanalyser;
 import com.opencsv.bean.CsvBindByName;
-public class CSVStateCensus {
+public class CSVStateCensus
+{
     @CsvBindByName(column = "State")
     private String State;
     @CsvBindByName(column = "Population")
@@ -35,4 +36,3 @@ public class CSVStateCensus {
         DensityPerSqKm = densityPerSqKm;
     }
 }
-
