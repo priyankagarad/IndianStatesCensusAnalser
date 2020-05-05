@@ -1,4 +1,5 @@
 package com.bl.censusanalyser;
+import com.bl.model.CSVStateCode;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 import java.io.IOException;

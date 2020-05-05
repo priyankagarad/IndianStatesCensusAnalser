@@ -1,10 +1,11 @@
 package com.bl.censusanalyser;
+import com.bl.dao.CSVStateCensusDAO;
 import com.bl.exception.CSVBuilderException;
 import com.bl.exception.StateCensusAnalyserException;
+import com.bl.model.CSVStateCensus;
 import com.google.gson.Gson;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;

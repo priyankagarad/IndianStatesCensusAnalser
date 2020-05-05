@@ -1,4 +1,4 @@
-package com.bl.censusanalyser;
+package com.bl.builder;
 import com.bl.exception.CSVBuilderException;
 import com.bl.exception.StateCensusAnalyserException;
 import java.io.Reader;
