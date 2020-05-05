@@ -10,8 +10,6 @@ import static com.bl.analyser.FileUtility.*;
 
 public class StateCensusAnalyserTest
 {
-
-
     StateCensusAnalyser stateCensusAnalyser;
 
     @Before
