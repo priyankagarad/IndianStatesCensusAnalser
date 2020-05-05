@@ -3,7 +3,7 @@ public class StateCensusAnalyserException extends Exception
 {
     public enum exceptionType
     {
-        FILE_NOT_FOUND
+        FILE_NOT_FOUND ,IMPROPER_FILE_TYPE
     }
     public exceptionType exceptionTypeObject;
     public StateCensusAnalyserException(exceptionType exceptionTypeObject)

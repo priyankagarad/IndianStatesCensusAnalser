@@ -9,15 +9,15 @@ import java.util.Iterator;
 import static java.nio.file.Files.newBufferedReader;
 public class StateCensusAnalyser
 {
-    public static void main(String[] args) throws IOException, StateCensusAnalyserException
-    {
-        StateCensusAnalyser stateCensusAnalyser = new StateCensusAnalyser(DATA_CSV_FILE_PATH);
-        stateCensusAnalyser.loadData();
-    }
     private static String DATA_CSV_FILE_PATH = "./src/test/resources/StateCensusData.csv";
     public StateCensusAnalyser(String path)
     {
         this.DATA_CSV_FILE_PATH=path;
+    }
+    public static void main(String[] args) throws IOException, StateCensusAnalyserException
+    {
+        StateCensusAnalyser stateCensusAnalyser = new StateCensusAnalyser(DATA_CSV_FILE_PATH);
+        stateCensusAnalyser.loadData();
     }
     public int loadData() throws IOException,StateCensusAnalyserException {
         int totalRecords = 0;

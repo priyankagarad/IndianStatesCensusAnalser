@@ -7,6 +7,9 @@ import java.io.IOException;
 public class StateCensusAnalyserTest
 {
     private static String DATA_CSV_FILE_PATH = "./src/test/resources/StateCensusData.csv";
+    private static String IMPROPER_FILE_NAME = "./src/test/resources/StateCensusData1.csv";
+    private static String IMPROPER_FILE_TYPE = "./src/test/resources/StateCensusData.txt";
+
     StateCensusAnalyser stateCensusAnalyser;
         @Before
         public void setUp()
@@ -33,6 +36,21 @@ public class StateCensusAnalyserTest
         {
             Assert.assertEquals(StateCensusAnalyserException.exceptionType.FILE_NOT_FOUND,e.exceptionTypeObject);
         }
+    }
+    //1.3
+    @Test
+    public void givenTheStateCensusCSVFile_whenCorrectButTypeIncorrect_shouldReturnCustomException() throws IOException
+    {
+        try
+        {
+            StateCensusAnalyser stateCensusAnalyser = new StateCensusAnalyser(IMPROPER_FILE_TYPE);
+            stateCensusAnalyser.loadData();
+        }
+        catch (StateCensusAnalyserException e)
+        {
+            Assert.assertEquals(StateCensusAnalyserException.exceptionType.FILE_NOT_FOUND,e.exceptionTypeObject);
+        }
+
     }
 }
 
