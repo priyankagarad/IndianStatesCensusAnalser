@@ -10,6 +10,7 @@ public class StateCensusAnalyserTest
     private static String IMPROPER_FILE_NAME = "./src/test/resources/StateCensusData1.csv";
     private static String IMPROPER_FILE_TYPE = "./src/test/resources/StateCensusData.txt";
     private static String WRONG_DELIMITER1="./src/test/resources/DelimiterIncorrect.csv";
+    private static String WRONG_FILE_FORMATE="./src/test/resources/DelimiterIncorrect.csv";
 
 
     StateCensusAnalyser stateCensusAnalyser;
@@ -64,7 +65,16 @@ public class StateCensusAnalyserTest
         {
             Assert.assertEquals(StateCensusAnalyserException.exceptionType.FILE_NOT_FOUND,e.exceptionTypeObject);
         }
-
+    }
+    
+    @Test
+    public void givenFileData_whenIncorrect_shouldThrowException() throws IOException {
+        try {
+            stateCensusAnalyser = new StateCensusAnalyser(WRONG_FILE_FORMATE);
+            stateCensusAnalyser.loadData();
+        } catch (StateCensusAnalyserException e) {
+            Assert.assertEquals(StateCensusAnalyserException.exceptionType.FILE_NOT_FOUND, e.exceptionTypeObject);
+        }
     }
 }
 
