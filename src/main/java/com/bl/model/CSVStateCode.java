@@ -1,6 +1,6 @@
 package com.bl.model;
 import com.opencsv.bean.CsvBindByName;
-public class CSVStateCode {
+public class CSVStateCode<E>{
     @CsvBindByName(column = "SrNo")
     private String SrNo;
     @CsvBindByName(column = "StateName")

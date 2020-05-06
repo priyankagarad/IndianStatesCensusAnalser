@@ -12,8 +12,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
-
 public class StateCensusAnalyser<T> {
     List<T> csvFileList = null;
     Map<Object, T> csvStateCodeMap = new HashMap<>();
@@ -26,12 +24,12 @@ public class StateCensusAnalyser<T> {
             ICSVBuilder icsvBuilder= CSVBuilderFactory.icsBuilder();
             Iterator<T> csvStateCensusIterator = icsvBuilder.getFileIterator(reader, csvClass);
             Iterable<T> stateCensusIterable = () -> csvStateCensusIterator;
-            StreamSupport.stream(stateCensusIterable.spliterator(), false)
-                    .forEach(
-                            stateCensusCSV -> {
-                                csvStateCodeMap.put(stateCensusCSV, (T) new CSVStateCensusDAO<T>(csvClass));
-                            });
-            csvFileList = csvStateCodeMap.values().stream().collect(Collectors.toList());
+            while (csvStateCensusIterator.hasNext())
+            {
+                CSVStateCensusDAO value =new CSVStateCensusDAO((CSVStateCensus) csvStateCensusIterator.next());
+                this.csvStateCodeMap.put(value.getState(), (T) value);
+                csvFileList = csvStateCodeMap.values().stream().collect(Collectors.toList());
+            }
             int totalRecords = csvStateCodeMap.size();
             System.out.println(totalRecords);
 
