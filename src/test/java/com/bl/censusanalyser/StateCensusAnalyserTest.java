@@ -190,5 +190,28 @@ public class StateCensusAnalyserTest {
         } catch (StateCensusAnalyserException e) {
         }
     }
+
+    /* Dual Sorting for US and india */
+    @Test
+    public void givenIndianStateData_whenFirstSortByPopulationDensity_ShouldReturnSortedResult() throws CSVBuilderException {
+        try {
+            stateCensusAnalyser.loadIndianData(DATA_CSV_FILE_PATH, CSVUSCensusData.class);
+            String sortedCensusData = stateCensusAnalyser.getSortData(CSVUSCensusData.class, 1);
+            CSVStateCensusDAO[] usCensusCSV = new Gson().fromJson(sortedCensusData, CSVStateCensusDAO[].class);
+            Assert.assertEquals("Uttar Pradesh", usCensusCSV[0].getState());
+        } catch (StateCensusAnalyserException e) {
+        }
+    }
+
+    @Test
+    public void givenUSStateData_whenFirstSortByOnPopulationDensity_ShouldReturnSortedResult() throws CSVBuilderException {
+        try {
+            stateCensusAnalyser.loadIndianData(US_CSV_FILE_PATH, CSVStateCensus.class);
+            String sortedCensusData = stateCensusAnalyser.getSortData(CSVUSCensusData.class, 5);
+            CSVStateCensusDAO[] usCensusCSV = new Gson().fromJson(sortedCensusData, CSVStateCensusDAO[].class);
+            Assert.assertEquals("North Carolina", usCensusCSV[0].getState());
+        } catch (StateCensusAnalyserException e) {
+        }
+    }
 }
 
