@@ -16,53 +16,44 @@ public class StateCensusAnalyser<T> {
     List<T> csvFileList = null;
     Map<Object, T> csvStateCodeMap = new HashMap<>();
 
-    /* Read State Census Data CSV file */
-    public int loadIndianData(String csvFilePath, Class<T> csvClass) throws CSVBuilderException, IOException {
-        try
-        {
+    public int loadIndianData(String csvFilePath, Class<T> csvClass) throws CSVBuilderException {
+        try {
             BufferedReader reader = Files.newBufferedReader(Paths.get(csvFilePath));
-            ICSVBuilder icsvBuilder= CSVBuilderFactory.icsBuilder();
+            ICSVBuilder icsvBuilder = CSVBuilderFactory.icsBuilder();
             Iterator<T> csvStateCensusIterator = icsvBuilder.getFileIterator(reader, csvClass);
-            Iterable<T> stateCensusIterable = () -> csvStateCensusIterator;
-            while (csvStateCensusIterator.hasNext())
-            {
-                CSVStateCensusDAO value =new CSVStateCensusDAO((CSVStateCensus) csvStateCensusIterator.next());
+            while (csvStateCensusIterator.hasNext()) {
+                CSVStateCensusDAO value = new CSVStateCensusDAO((CSVStateCensus) csvStateCensusIterator.next());
                 this.csvStateCodeMap.put(value.getState(), (T) value);
                 csvFileList = csvStateCodeMap.values().stream().collect(Collectors.toList());
             }
             int totalRecords = csvStateCodeMap.size();
-            System.out.println(totalRecords);
-
             return totalRecords;
-
-            }  catch (IOException e)
-            {
-                throw new StateCensusAnalyserException(StateCensusAnalyserException.exceptionType.FILE_NOT_FOUND);
-            } catch (RuntimeException e)
-            {
-                throw new StateCensusAnalyserException(StateCensusAnalyserException.exceptionType.INCORRECT_FILE);
-            }
+        } catch (IOException e) {
+            throw new StateCensusAnalyserException(StateCensusAnalyserException.exceptionType.FILE_NOT_FOUND);
+        } catch (RuntimeException e) {
+            throw new StateCensusAnalyserException(StateCensusAnalyserException.exceptionType.INCORRECT_FILE);
         }
+    }
 
-    /* Sort The Data From Csv File */
-    public String getSortData(Object T) throws StateCensusAnalyserException {
+    public String getSortData(Object T,int Number) throws StateCensusAnalyserException {
         if (csvFileList.size() == 0 | csvFileList == null) {
             throw new StateCensusAnalyserException(StateCensusAnalyserException.exceptionType.NO_CENSUS_DATA);
         }
         Comparator<T> stateCensusAnalyserComparator = Comparator.comparing(csvCounter -> T.toString());
-        this.sort(csvFileList,stateCensusAnalyserComparator);
-        String sortedData =new Gson().toJson(csvFileList);
-        return  sortedData;
+        this.sort(csvFileList, Number);
+        String sortedData = new Gson().toJson(csvFileList);
+        return sortedData;
     }
-
-    public void sort(List<T> csvFileList, Comparator<T> censusComparator) {
-        for (int i = 0; i < this.csvFileList.size(); i++) {
-            for (int j = 0; j < this.csvFileList.size() - i - 1; j++) {
-                T census1 = this.csvFileList.get(j);
-                T census2 = this.csvFileList.get(j + 1);
-                if (censusComparator.compare(census1, census2) > 0) {
-                    this.csvFileList.set(j, census2);
-                    this.csvFileList.set(j + 1, census1);
+    public void sort(List<T> csvFileList,int number) {
+        for (int i = 0; i < csvFileList.size(); i++) {
+            for (int j = 0; j < csvFileList.size() - i - 1; j++) {
+                String census1[] = csvFileList.get(i).toString().split(",");
+                String census2[] =csvFileList.get(j).toString().split(",");
+                if (census1[number].compareToIgnoreCase(census2[number])>0) {
+                    T censusData = csvFileList.get(i);
+                    T censusData1 = csvFileList.get(j);
+                    csvFileList.set(j, censusData);
+                    csvFileList.set(i,censusData1);
                 }
             }
         }
