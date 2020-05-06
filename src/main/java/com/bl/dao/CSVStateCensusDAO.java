@@ -27,9 +27,6 @@ public class CSVStateCensusDAO<E>
         this.TIN = indiaStateCodeCSV.getTIN();
     }
 
-    public CSVStateCensusDAO(Class<E> csvClass) {
-    }
-
     public String getSrNo() {
         return SrNo;
     }
