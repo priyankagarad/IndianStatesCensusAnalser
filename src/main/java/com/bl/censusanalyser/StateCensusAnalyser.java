@@ -1,4 +1,6 @@
 package com.bl.censusanalyser;
+import com.bl.builder.CSVBuilderFactory;
+import com.bl.builder.ICSVBuilder;
 import com.bl.dao.CSVStateCensusDAO;
 import com.bl.exception.CSVBuilderException;
 import com.bl.exception.StateCensusAnalyserException;
@@ -10,26 +12,30 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 public class StateCensusAnalyser<T> {
     List<T> csvFileList = null;
-    Map<String, T> csvStateCodeMap = new HashMap<>();
+    Map<Object, T> csvStateCodeMap = new HashMap<>();
 
     /* Read State Census Data CSV file */
     public int loadIndianData(String csvFilePath, Class<T> csvClass) throws CSVBuilderException, IOException {
         try
         {
             BufferedReader reader = Files.newBufferedReader(Paths.get(csvFilePath));
-            ICSVBuilder icsvBuilder=CSVBuilderFactory.icsBuilder();
-                Iterator<T> csvStateCensusIterator = icsvBuilder.getFileIterator(reader, csvClass);
-                Iterable<T> csvFileIterable =()-> csvStateCensusIterator;
-                while (csvStateCensusIterator.hasNext()) {
-                    CSVStateCensusDAO value =new CSVStateCensusDAO((CSVStateCensus) csvStateCensusIterator.next());
-                    this.csvStateCodeMap.put(value.getState(), (T) value);
-                    csvFileList = csvStateCodeMap.values().stream().collect(Collectors.toList());
-                }
-                int totalRecords = csvStateCodeMap.size();
-                return totalRecords;
+            ICSVBuilder icsvBuilder= CSVBuilderFactory.icsBuilder();
+            Iterator<T> csvStateCensusIterator = icsvBuilder.getFileIterator(reader, csvClass);
+            Iterable<T> stateCensusIterable = () -> csvStateCensusIterator;
+            StreamSupport.stream(stateCensusIterable.spliterator(), false)
+                    .forEach(
+                            stateCensusCSV -> {
+                                csvStateCodeMap.put(stateCensusCSV, (T) new CSVStateCensusDAO<T>(csvClass));
+                            });
+            csvFileList = csvStateCodeMap.values().stream().collect(Collectors.toList());
+            int totalRecords = csvStateCodeMap.size();
+            System.out.println(totalRecords);
+
+            return totalRecords;
 
             }  catch (IOException e)
             {

@@ -22,7 +22,7 @@ public class CSVBuilder implements ICSVBuilder
     public <E> CsvToBean<E> getCSVBean(Reader reader, Class<E> csvClass) throws CSVBuilderException
     {
             try {
-                CsvToBeanBuilder csvToBeanBuilder = new CsvToBeanBuilder(reader);
+                CsvToBeanBuilder<E> csvToBeanBuilder = new CsvToBeanBuilder(reader);
                 csvToBeanBuilder.withType(csvClass);
                 csvToBeanBuilder.withIgnoreLeadingWhiteSpace(true);
                 return csvToBeanBuilder.build();

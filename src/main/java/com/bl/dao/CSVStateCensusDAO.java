@@ -1,9 +1,7 @@
 package com.bl.dao;
-
 import com.bl.model.CSVStateCensus;
 import com.bl.model.CSVStateCode;
-
-public class CSVStateCensusDAO
+public class CSVStateCensusDAO<E>
 {
     private String SrNo;
     private String State;
@@ -12,6 +10,9 @@ public class CSVStateCensusDAO
     private int DensityPerSqKm;
     private String StateCode;
     private String TIN;
+    CSVStateCensus indianStateCode;
+    CSVStateCode stateCodee;
+   
 
     public CSVStateCensusDAO(CSVStateCensus indiaCensusCSV) {
         this.State = indiaCensusCSV.getState();
@@ -25,6 +26,10 @@ public class CSVStateCensusDAO
         this.StateCode = indiaStateCodeCSV.getStateCode();
         this.TIN = indiaStateCodeCSV.getTIN();
     }
+
+    public CSVStateCensusDAO(Class<E> csvClass) {
+    }
+
     public String getSrNo() {
         return SrNo;
     }

@@ -139,8 +139,7 @@ public class StateCensusAnalyserTest
             stateCensusAnalyser.loadIndianData(DATA_CSV_FILE_PATH,CSVStateCensus.class);
             String sortedStateCensusData = stateCensusAnalyser.getSortData(CSVStateCensus.class);
             CSVStateCensus[] csvStateCensus = new Gson().fromJson(sortedStateCensusData, CSVStateCensus[].class);
-            Assert.assertEquals("Andhra Pradesh",csvStateCensus[0].getState());
-            Assert.assertEquals("West Bengal",csvStateCensus[28].getState());
+            Assert.assertEquals("Nagaland",csvStateCensus[28].getState());
         } catch (StateCensusAnalyserException e) {
         }
     }
